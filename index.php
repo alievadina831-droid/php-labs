@@ -1,17 +1,17 @@
 <?php
-// Локальді орнату және күн мәндерін таңдау
+
+include 'cookie.inc.php';
+
+
 setlocale(LC_ALL, "russian");
 $day = strftime('%d');
 $mon = strftime('%m');
 $year = strftime('%Y');
 
 
-/*
- * Ағымдағы сағатты 00-ден 23-ке дейінгі жол түрінде аламыз
- * және оны бүтін санға түрлендіреміз.
- */
+
 $hour = (int) strftime('%H');
-$welcome = ''; // Сәлемдесу үшін айнымалы
+$welcome = ''; 
 
 if ($hour >= 0 && $hour < 6) {
     $welcome = 'Доброй ночи';
@@ -33,6 +33,26 @@ $leftMenu = [
   ['link'=>'Таблица умножения', 'href'=>'table.php'],
   ['link'=>'Калькулятор', 'href'=>'calc.php']
 ];
+
+/**
+ * Рисует меню навигации.
+ * $menu     - массив пунктов меню (link, href)
+ * $vertical - true: вертикально, false: горизонтально
+ */
+function drawMenu($menu, $vertical = true)
+{
+    if ($vertical) {
+        echo '<ul>';
+        foreach ($menu as $item) {
+            echo "<li><a href='{$item['href']}'>{$item['link']}</a></li>";
+        }
+        echo '</ul>';
+    } else {
+        foreach ($menu as $item) {
+            echo "<a href='{$item['href']}'>{$item['link']}</a> &nbsp;";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,6 +80,16 @@ $leftMenu = [
     <blockquote>
       <?php echo 'Сегодня ', $day, ' число, ', $mon, ' месяц, ', $year, ' год.'; ?>
     </blockquote>
+    <p>
+      <?php
+      if ($visitCounter == 1) {
+          echo 'Спасибо, что зашли на огонек';
+      } else {
+          echo "Вы зашли к нам $visitCounter раз<br>";
+          echo "Последнее посещение: $lastVisit";
+      }
+      ?>
+    </p>
     <h3>Зачем мы ходим в школу?</h3>
     <p>
       У нас каждую минуту что-то происходит и кипит жизнь. Проходят уроки и шумят перемены, кто-то отвечает у доски, кто-то отчаянно зубрит перед контрольной пройденный материал, кому-то ставят «пятерку» за сочинение, кого-то ругают за непрочитанную книгу, на школьной спортивной площадке ребята играют в футбол, а девочки – в волейбол, некоторые готовятся к соревнованиям, другие участвуют в репетициях праздников…
@@ -77,19 +107,13 @@ $leftMenu = [
     <!-- Навигация -->
     <h2>Навигация по сайту</h2>
     <!-- Меню -->
-    <?php
-    echo '<ul>';
-    foreach ($leftMenu as $item) {
-        echo "<li><a href='{$item['href']}'>{$item['link']}</a></li>";
-    }
-    echo '</ul>';
-    ?>
+    <?php drawMenu($leftMenu); ?>
     <!-- Меню -->
     <!-- Навигация -->
   </div>
   <div id="footer">
     <!-- Нижняя часть страницы -->
-    &copy; Супер Мега Веб-мастер, 2000 &ndash; 2021
+    &copy; Супер Мега Веб-мастер, 2000 &ndash; <?= $year ?>
     <!-- Нижняя часть страницы -->
   </div>
 </body>

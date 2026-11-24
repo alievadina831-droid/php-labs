@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
+  <?php
+setlocale(LC_ALL, "russian");
 
+$year = strftime('%Y');
+?>
 <head>
   <title>Контакты</title>
   <meta charset="utf-8" />
@@ -22,9 +26,9 @@
     <!-- Заголовок -->
     <!-- Область основного контента -->
     <?php
-    $size = ini_get('post_max_size');        // например "8M"
-    $unit = strtoupper(substr($size, -1));   // последняя буква: K, M или G
-    $size = (int) $size;                     // число без буквы
+    $size = ini_get('post_max_size');        
+    $unit = strtoupper(substr($size, -1));  
+    $size = (int) $size;                    
 
     switch ($unit) {
         case 'G':
@@ -72,7 +76,7 @@
   </div>
   <div id="footer">
     <!-- Нижняя часть страницы -->
-    &copy; Супер Мега Веб-мастер, 2000 &ndash; 2021
+    &copy; Супер Мега Веб-мастер, 2000 &ndash;  <?= $year ?>
     <!-- Нижняя часть страницы -->
   </div>
 </body>

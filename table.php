@@ -1,3 +1,37 @@
+<?php
+setlocale(LC_ALL, "russian");
+
+$year = strftime('%Y');
+
+function drawTable($cols, $rows, $color)
+{
+    echo "<table border='1' cellpadding='5' style='background-color: $color;'>";
+    for ($i = 1; $i <= $rows; $i++) {
+        echo '<tr>';
+        for ($j = 1; $j <= $cols; $j++) {
+            $value = $i * $j;
+            if ($i == 1 || $j == 1) {
+              
+                echo "<th style='text-align: center; background-color: #3e809c;'>$value</th>";
+            } else {
+                echo "<td>$value</td>";
+            }
+        }
+        echo '</tr>';
+    }
+    echo '</table>';
+}
+
+
+$cols  = isset($_GET['cols'])  ? (int) $_GET['cols']  : 5;
+$rows  = isset($_GET['rows'])  ? (int) $_GET['rows']  : 5;
+$color = isset($_GET['color']) && $_GET['color'] !== '' ? $_GET['color'] : 'white';
+
+if ($cols < 1 || $cols > 10) { $cols = 5; }
+if ($rows < 1 || $rows > 10) { $rows = 5; }
+
+if (!preg_match('/^#?[A-Za-z0-9]{1,20}$/', $color)) { $color = 'white'; }
+?>
 <!DOCTYPE html>
 <html>
 
@@ -24,57 +58,21 @@
     <form action=''>
       <label>Количество колонок: </label>
       <br />
-      <input name='cols' type='text' value="" />
+      <input name='cols' type='text' value="<?= $cols ?>" />
       <br />
       <label>Количество строк: </label>
       <br />
-      <input name='rows' type='text' value="" />
+      <input name='rows' type='text' value="<?= $rows ?>" />
       <br />
       <label>Цвет: </label>
       <br />
-      <input name='color' type='text' value="" />
+      <input name='color' type='text' value="<?= htmlspecialchars($color) ?>" />
       <br />
       <br />
       <input type='submit' value='Создать' />
     </form>
     <!-- Таблица -->
-    <table border='1' width="200">
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>4</td>
-        <td>6</td>
-        <td>8</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>6</td>
-        <td>9</td>
-        <td>12</td>
-        <td>15</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>8</td>
-        <td>12</td>
-        <td>16</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>10</td>
-        <td>15</td>
-        <td>20</td>
-        <td>25</td>
-      </tr>
-    </table>
+    <?php drawTable($cols, $rows, $color); ?>
     <!-- Таблица -->
     <!-- Область основного контента -->
   </div>
@@ -97,7 +95,7 @@
   </div>
   <div id="footer">
     <!-- Нижняя часть страницы -->
-    &copy; Супер Мега Веб-мастер, 2000 &ndash; 2021
+    &copy; Супер Мега Веб-мастер, 2000 &ndash; <?= $year ?>
     <!-- Нижняя часть страницы -->
   </div>
 </body>

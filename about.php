@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-
+  <?php
+setlocale(LC_ALL, "russian");
+$year = strftime('%Y');
+?>
 <head>
   <title>О сайте</title>
   <meta charset="utf-8" />
@@ -56,7 +59,7 @@
   </div>
   <div id="footer">
     <!-- Нижняя часть страницы -->
-    &copy; Супер Мега Веб-мастер, 2000 &ndash; 2021
+    &copy; Супер Мега Веб-мастер, 2000 &ndash; <?= $year ?>
     <!-- Нижняя часть страницы -->
   </div>
 </body>
